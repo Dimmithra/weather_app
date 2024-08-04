@@ -6,6 +6,7 @@ import * as Location from 'expo-location';
 import React, { useEffect, useState } from 'react';
 
 const openWeatherKey = 'adc2ee36f5a0cca64a41ea2484f2463e';
+let url = `https://api.openweathermap.org/data/2.5/onecall?&units=metric&exclude=minutely&appid=${openWeatherKey}`;
 
 const Weather = () => {
     const [forecast, setForecast] = useState(null);
@@ -21,6 +22,7 @@ const Weather = () => {
         }
 
         let location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+        // const response = await fetch(`${url}&lat=${location.coords.latitude}&lon=${location.coords.longitude}`)
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=${openWeatherKey}`);
 
         const data = await response.json();
@@ -63,17 +65,18 @@ const Weather = () => {
                 <Text style={styles.title}>
                     current weather forecast
                 </Text>
-                <Text style={{ textAlign: "center" }}>
+                {/* <Text style={{ textAlign: "center" }}>
                     Your Location
-                </Text>
+                </Text> */}
                 <View style={styles.current}>
                     <Image style={styles.largeIcon}
                         source={{
                             uri: `https://openweathermap.org/img/wn/${icon}@4x.png`
                         }}
                     />
-                    <Text style={styles.currentTemprate}>{temperature}°C</Text>
+                    {/* <Text style={styles.currentTemprate}>{temperature}°C</Text> */}
                 </View>
+                <Text style={styles.currentTemprate}>{temperature}°C</Text>
                 <Text style={styles.weatherDiscription}>
                     {weatherDescription}
                 </Text>
@@ -105,7 +108,7 @@ const Weather = () => {
                         </View>
                     </View>
                 </View>
-                <View style={styles.hourlyText}>
+                {/* <View style={styles.hourlyText}>
                     <Text style={styles.hourlyTextDetail}>
                         Next Hours
                     </Text>
@@ -127,7 +130,7 @@ const Weather = () => {
                             }
                         }
                     />
-                </View>
+                </View> */}
             </ScrollView>
         </SafeAreaView>
     );
@@ -159,23 +162,26 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     current: {
-        flexDirection: "row",
+        // flexDirection: "row",
         alignContent: "center",
         alignItems: "center",
-        marginTop: 30,
+        marginTop: 5,
     },
     largeIcon: {
         width: 200,
-        height: 250,
+        height: 150,
+        alignItems: "center",
+        alignContent: "center",
     }, currentTemprate: {
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: 24,
         color: "#030245",
         fontWeight: "bold"
     }, weatherDiscription: {
         fontSize: 20,
         alignItems: "center",
-        textAlign: "center"
+        textAlign: "center",
+         fontWeight: "bold"
     }, tempIcon: {
         padding: 10,
         width: 60,
@@ -205,7 +211,7 @@ const styles = StyleSheet.create({
         textAlign: "center"
     }, info: {
         width: Dimensions.get('screen').width / 2.5,
-        backgroundColor: "#030245",
+        backgroundColor: "#b5c7d5",
         justifyContent: 'center',
         borderRadius: 15,
     }, hourlyTextDetail: {
