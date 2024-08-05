@@ -22,8 +22,8 @@ const Weather = () => {
         }
 
         let location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
-        // const response = await fetch(`${url}&lat=${location.coords.latitude}&lon=${location.coords.longitude}`)
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=${openWeatherKey}`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=${openWeatherKey}`)
+        // const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=${openWeatherKey}`);
 
         const data = await response.json();
 
@@ -32,6 +32,7 @@ const Weather = () => {
             Alert.alert('Error', 'Something went wrong');
             setRefresh(false);
         } else {
+            console.log(data);
             setForecast(data);
         }
         setRefresh(false);
@@ -65,9 +66,9 @@ const Weather = () => {
                 <Text style={styles.title}>
                     current weather forecast
                 </Text>
-                {/* <Text style={{ textAlign: "center" }}>
-                    Your Location
-                </Text> */}
+                <Text style={styles.locationText}>
+                    {forecast.name}
+                </Text>
                 <View style={styles.current}>
                     <Image style={styles.largeIcon}
                         source={{
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
     },
     largeIcon: {
         width: 200,
-        height: 150,
+        height: 250,
         alignItems: "center",
         alignContent: "center",
     }, currentTemprate: {
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         alignItems: "center",
         textAlign: "center",
-         fontWeight: "bold"
+        fontWeight: "bold"
     }, tempIcon: {
         padding: 10,
         width: 60,
@@ -219,5 +220,10 @@ const styles = StyleSheet.create({
         // color: "",
         padding: 2,
         textAlign: "center"
+    }, locationText: {
+        fontSize: 16,
+        textAlign: "center",
+        color: "#0f3380",
+        fontWeight: "bold"
     }
 });
